@@ -1,9 +1,9 @@
 import { Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import TodoForm from './TodoForm'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { selectIsEdit } from '../redux/features/todo/todoSlice'
-import { close, selectOpen } from '../redux/features/todoDialog/todoDialogSlice'
+import TodoForm from '../forms/TodoForm'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { selectIsEdit, setTodoToEdit } from '../../redux/features/todo/todoSlice'
+import { close, selectOpen } from '../../redux/features/todoDialog/todoDialogSlice'
 
 export default function AddTodoDialog() {
   const isEdit = useAppSelector(selectIsEdit)
@@ -12,6 +12,7 @@ export default function AddTodoDialog() {
 
   const handleClose = () => {
     dispatch(close())
+    dispatch(setTodoToEdit(null))
   }
 
   return (
@@ -24,7 +25,6 @@ export default function AddTodoDialog() {
           position: 'absolute',
           right: 8,
           top: 8,
-          color: (theme) => theme.palette.grey[500],
         }}
       >
         <CloseIcon />

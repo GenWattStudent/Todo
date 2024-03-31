@@ -1,4 +1,33 @@
 body {
   background-color: rgb(20, 20, 20);
   padding: 1.2rem;
+  overflow: hidden;
+}
+
+.todo-overlay {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #cccccc36;
+  width: 280px;
+}
+
+.tab-dragging {
+  background-color: #ccc;
+}
+
+/* scrool bar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1976d2;
+  border-radius: 10px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #dddfe0;
+  border-radius: 10px;
 }

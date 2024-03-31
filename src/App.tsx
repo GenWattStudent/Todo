@@ -1,40 +1,37 @@
 import './App.css'
-import ToDoList from './componets/ToDoList'
-import ComplateList from './componets/ComplateList'
-import { Box, Button, Grid, Snackbar } from '@mui/material'
-import AddToDoContainer from './componets/AddToDoContainer'
+import { Box, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import AddTodoDialog from './componets/AddTodoDialog'
-import { useDispatch } from 'react-redux'
-import { open } from './redux/features/todoDialog/todoDialogSlice'
+import AddTodoDialog from './componets/dialogs/AddTodoDialog'
+import { useAppSelector } from './redux/hooks'
+import { selectTabs } from './redux/features/todo/todoSlice'
+import TodoTabs from './componets/TodoTabs/TodoTabs'
+import AddTabDialog from './componets/dialogs/AddTabDialog'
+import { useState } from 'react'
 
 function App() {
-  const dispatch = useDispatch()
+  const tabs = useAppSelector(selectTabs)
+  const [open, setOpen] = useState(false)
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const openForm = () => {
-    dispatch(open())
+    setOpen(true)
   }
 
   return (
     <>
-      <Box sx={{ display: { xs: 'block', md: 'none' } }} marginBottom={3}>
+      <Box marginBottom={3}>
         <Button onClick={openForm} variant="contained" startIcon={<AddIcon />}>
-          Add to do
+          Add Tab
         </Button>
       </Box>
-      <Grid container spacing={3} flexGrow={1}>
-        <Grid md={4} item sx={{ display: { xs: 'none', md: 'block' } }}>
-          <AddToDoContainer />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <ToDoList />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <ComplateList />
-        </Grid>
-      </Grid>
+
+      <TodoTabs tabs={tabs} />
 
       <AddTodoDialog />
+      <AddTabDialog isOpen={open} close={handleClose} />
     </>
   )
 }

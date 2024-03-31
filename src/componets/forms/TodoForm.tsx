@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { ITodoForm } from '../types'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { addTodo, selectEditedTodo, selectIsEdit, setTodoToEdit } from '../redux/features/todo/todoSlice'
+import { ITodoForm } from '../../types'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import {
+  createTodo,
+  editTodo,
+  selectEditedTodo,
+  selectIsEdit,
+  selectSelectedTabId,
+  setTodoToEdit,
+} from '../../redux/features/todo/todoSlice'
 import {
   FormControl,
   InputLabel,
@@ -15,9 +22,10 @@ import {
   OutlinedInput,
   Button,
   Box,
-  Snackbar,
+  Typography,
 } from '@mui/material'
-import { selectCategories } from '../redux/features/todoCategory/todoCategorySlice'
+import { selectCategories } from '../../redux/features/todoCategory/todoCategorySlice'
+import { close } from '../../redux/features/todoDialog/todoDialogSlice'
 
 export interface TodoFormProps {}
 
@@ -25,19 +33,20 @@ const initialState: ITodoForm = {
   title: '',
   isDaily: false,
   category: 'work',
+  tabId: '',
 }
 
 export default function TodoForm({}: TodoFormProps) {
   const [form, setForm] = useState(initialState)
-  const categories = useAppSelector(selectCategories)
-  const dispatch = useAppDispatch()
-  const isEdit = useAppSelector(selectIsEdit)
-  const editedTodo = useAppSelector(selectEditedTodo)
   const [error, setError] = useState(false)
-  const [open, setOpen] = useState(false)
   const [message, setMessage] = useState('')
 
-  const close = () => setOpen(false)
+  const dispatch = useAppDispatch()
+
+  const categories = useAppSelector(selectCategories)
+  const isEdit = useAppSelector(selectIsEdit)
+  const editedTodo = useAppSelector(selectEditedTodo)
+  const selectedTabId = useAppSelector(selectSelectedTabId)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target
@@ -54,15 +63,21 @@ export default function TodoForm({}: TodoFormProps) {
     e.preventDefault()
 
     if (form.title.length < 3) {
-      setOpen(true)
       setError(true)
       setMessage('Title should have more than 3 letters')
       return
     }
 
-    dispatch(addTodo(form))
+    if (isEdit && editedTodo && selectedTabId) {
+      dispatch(editTodo({ todo: form, tabId: selectedTabId, todoId: editedTodo.id }))
+      dispatch(setTodoToEdit(null))
+    } else {
+      dispatch(createTodo({ ...form, tabId: selectedTabId!! }))
+    }
+
     setForm(initialState)
     setError(false)
+    dispatch(close())
   }
 
   const cancelEdit = () => {
@@ -71,10 +86,15 @@ export default function TodoForm({}: TodoFormProps) {
   }
 
   useEffect(() => {
-    if (isEdit && editedTodo) {
-      setForm({ title: editedTodo.title, isDaily: editedTodo.isDaily, category: editedTodo.category })
+    if (isEdit && editedTodo && selectedTabId) {
+      setForm({
+        title: editedTodo.title,
+        isDaily: editedTodo.isDaily,
+        category: editedTodo.category,
+        tabId: selectedTabId,
+      })
     }
-  }, [isEdit, editedTodo])
+  }, [isEdit, editedTodo, selectedTabId])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -88,6 +108,7 @@ export default function TodoForm({}: TodoFormProps) {
           control={<Checkbox onChange={handleChange} name="isDaily" id="isDaily" checked={form.isDaily} />}
           label={form.isDaily ? 'Daily' : 'Not Daily'}
         />
+        {error && <Typography color="error">{message}</Typography>}
       </FormGroup>
 
       <FormControl fullWidth sx={{ mt: 1 }}>
@@ -119,7 +140,6 @@ export default function TodoForm({}: TodoFormProps) {
           )}
         </Box>
       </FormControl>
-      <Snackbar onClose={close} open={open} message={message} />
     </form>
   )
 }
