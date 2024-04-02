@@ -39,6 +39,18 @@ export default function TodoForm({}: TodoFormProps) {
         />
       </FormControl>
 
+      <InputLabel htmlFor="endDate">End Date</InputLabel>
+      <FormControl fullWidth style={{ marginTop: '.5rem' }}>
+        <Input
+          type="datetime-local"
+          name="endDate"
+          id="endDate"
+          error={error}
+          value={form.endDate}
+          onChange={handleChange}
+        />
+      </FormControl>
+
       <FormGroup>
         <FormControlLabel
           control={<Checkbox onChange={handleChange} name="isDaily" id="isDaily" checked={form.isDaily} />}

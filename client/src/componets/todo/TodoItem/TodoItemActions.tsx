@@ -1,10 +1,11 @@
 import { ButtonGroup, Button } from '@mui/material'
-import { deleteTodo, selectTab, setTodoToEdit } from '../../../redux/features/todo/todoSlice'
+import { selectTab, setTodoToEdit } from '../../../redux/features/todo/todoSlice'
 import { useAppDispatch } from '../../../redux/hooks'
 import { Todo } from '../../../types'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
 import { open } from '../../../redux/features/todoDialog/todoDialogSlice'
+import { deleteTodo } from '../../../redux/features/todo/api'
 
 export interface TodoItemActionsProps {
   todo: Todo
@@ -15,7 +16,7 @@ export default function TodoItemActions({ todo, tabId }: TodoItemActionsProps) {
   const dispatch = useAppDispatch()
 
   const handleDelete = () => {
-    dispatch(deleteTodo({ todoId: todo.id, tabId }))
+    dispatch(deleteTodo(todo._id))
   }
 
   const handleEdit = () => {

@@ -5,16 +5,19 @@ import AddTodoDialog from '../../componets/dialogs/AddTodoDialog'
 import AddIcon from '@mui/icons-material/Add'
 import '../../App.css'
 import useTodoView from './useTodoView'
+import StatusBar from '../../componets/StatusBar/StatusBar'
 
 function TodoView() {
   const { handleClose, open, openForm, tabs } = useTodoView()
 
   return (
     <>
-      <Box marginBottom={3}>
+      <Box marginBottom={3} display={'flex'} justifyContent={'space-between'}>
         <Button onClick={openForm} variant="contained" startIcon={<AddIcon />}>
           Add Tab
         </Button>
+
+        <StatusBar />
       </Box>
 
       <TodoTabs tabs={tabs} />

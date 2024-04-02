@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../../redux/hooks'
-import { deleteTab, editTab, selectTab } from '../../../redux/features/todo/todoSlice'
+import { selectTab } from '../../../redux/features/todo/todoSlice'
 import { open } from '../../../redux/features/todoDialog/todoDialogSlice'
 import { ITodoTab } from '../../../types'
+import { deleteTab, editTab } from '../../../redux/features/todo/api'
 
 export interface TabHeaderProps {
   tab: ITodoTab
@@ -14,7 +15,7 @@ function useTabHeader({ tab }: TabHeaderProps) {
 
   const addTodo = () => {
     dispatch(open())
-    dispatch(selectTab(tab.id))
+    dispatch(selectTab(tab._id))
   }
 
   const editTabMode = () => {
@@ -22,7 +23,7 @@ function useTabHeader({ tab }: TabHeaderProps) {
   }
 
   const handleDeleteTab = () => {
-    dispatch(deleteTab(tab.id))
+    dispatch(deleteTab(tab._id))
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

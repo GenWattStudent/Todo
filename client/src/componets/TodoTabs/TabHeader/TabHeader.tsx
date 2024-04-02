@@ -34,6 +34,7 @@ function TabHeader({ dragHandleProps, tab }: TabHeaderProps) {
             {tab.title}
           </Typography>
         )}
+
         <TabActions
           textColor={tab.textColor}
           addTodo={addTodo}
@@ -41,7 +42,6 @@ function TabHeader({ dragHandleProps, tab }: TabHeaderProps) {
           handleDeleteTab={handleDeleteTab}
         />
       </Box>
-
       <ItemsCount textColor={tab.textColor} items={tab.items} />
     </Paper>
   )

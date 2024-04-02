@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { ITodoForm } from '../../types'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import {
-  createTodo,
-  editTodo,
-  selectEditedTodo,
-  selectIsEdit,
-  selectSelectedTabId,
-  setTodoToEdit,
-} from '../../redux/features/todo/todoSlice'
+import { selectEditedTodo, selectIsEdit, selectSelectedTabId, setTodoToEdit } from '../../redux/features/todo/todoSlice'
 import { SelectChangeEvent } from '@mui/material'
 import { selectCategories } from '../../redux/features/todoCategory/todoCategorySlice'
 import { close } from '../../redux/features/todoDialog/todoDialogSlice'
+import { editTodo, createTodo } from '../../redux/features/todo/api'
 
 const initialState: ITodoForm = {
   title: '',
@@ -19,6 +13,7 @@ const initialState: ITodoForm = {
   category: 'work',
   tabId: '',
   description: '',
+  endDate: '',
 }
 
 function useTodoForm() {
@@ -54,7 +49,7 @@ function useTodoForm() {
     }
 
     if (isEdit && editedTodo && selectedTabId) {
-      dispatch(editTodo({ todo: form, tabId: selectedTabId, todoId: editedTodo.id }))
+      dispatch(editTodo({ todo: form, tabId: selectedTabId, todoId: editedTodo._id }))
       dispatch(setTodoToEdit(null))
     } else {
       dispatch(createTodo({ ...form, tabId: selectedTabId!! }))
@@ -78,6 +73,7 @@ function useTodoForm() {
         category: editedTodo.category,
         tabId: selectedTabId,
         description: editedTodo.description,
+        endDate: editedTodo.endDate,
       })
     }
   }, [isEdit, editedTodo, selectedTabId])

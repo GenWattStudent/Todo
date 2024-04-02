@@ -4,6 +4,8 @@ import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { routes } from './router/routes'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = document.getElementById('root')
 const router = createBrowserRouter(routes)
@@ -15,7 +17,8 @@ if (!root) {
 ReactDOM.createRoot(root).render(
   // <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}/>
+      <ToastContainer />
+      <RouterProvider router={router} />
     </Provider>
   // </React.StrictMode>
 

@@ -2,25 +2,26 @@ export interface Todo {
     title: string;
     isDaily: boolean;
     category: string;
-    id: string;
+    _id: string;
     endDate: string;
     order: number;
     description: string;
+    tabId: string;
 }
 
-export type ITodoForm = Omit<Todo, 'isComplated' | 'id' | 'endDate' | 'order'> & { tabId: string };
+export type ITodoForm = Omit<Todo, 'isComplated' | '_id' | 'order'> & { tabId: string };
 
 export interface ITodoCategory {
     value: string;
 }
 
 export interface IOrderData {
-    id: string
-    order: number
+    tabId: string
+    todos: Todo[]
 }
 
 export interface ITodoTab {
-    id: string
+    _id: string
     title: string
     color: string
     textColor: string

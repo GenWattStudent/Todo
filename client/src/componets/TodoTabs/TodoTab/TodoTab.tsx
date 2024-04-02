@@ -19,7 +19,7 @@ export default function TodoTab({ tab, index }: ToDoListProps) {
   const { containerHeight } = useTodoTab({ containerRef })
 
   return (
-    <Draggable draggableId={tab.id} index={index}>
+    <Draggable draggableId={tab._id} index={index}>
       {(provided) => (
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Box
@@ -30,16 +30,16 @@ export default function TodoTab({ tab, index }: ToDoListProps) {
           >
             <TabHeader tab={tab} dragHandleProps={provided.dragHandleProps} />
 
-            <Droppable droppableId={tab.id} type="todo" direction="vertical">
+            <Droppable droppableId={tab._id} type="todo" direction="vertical">
               {(provided) => (
                 <div style={{ minHeight: 200 }} {...provided.droppableProps} ref={provided.innerRef}>
                   {tab.items.map((todo, index) => (
                     <TodoItem
                       todo={todo}
-                      key={todo.id}
-                      tabId={tab.id}
+                      key={todo._id}
+                      tabId={tab._id}
                       index={index}
-                      actions={<TodoItemActions todo={todo} tabId={tab.id} />}
+                      actions={<TodoItemActions todo={todo} tabId={tab._id} />}
                     />
                   ))}
                   {provided.placeholder}

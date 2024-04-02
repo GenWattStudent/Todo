@@ -20,7 +20,7 @@ function TodoTabs({ tabs }: TodoTabsProps) {
           {(provided) => (
             <div style={{ display: 'flex' }} {...provided.droppableProps} ref={provided.innerRef}>
               {tabs.map((tab, index) => (
-                <TodoTab key={tab.id} tab={tab} index={index} />
+                <TodoTab key={tab._id} tab={tab} index={index} />
               ))}
               {provided.placeholder}
             </div>

@@ -6,7 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import useTodoDetailsView from './useTodoDetailsView'
 
 function TodoDetailsView() {
-  const { goBack, tabId, todoId } = useTodoDetailsView()
+  const { goBack, tabId, todoId, todo } = useTodoDetailsView()
   const theme = useTheme()
 
   if (!tabId || !todoId) {
@@ -18,8 +18,6 @@ function TodoDetailsView() {
   if (!tab) {
     return <div>Tab not found</div>
   }
-
-  const todo = tab.items.find((todo) => todo.id === todoId)
 
   if (!todo) {
     return <div>Todo not found</div>

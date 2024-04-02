@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { addTab } from '../../redux/features/todo/todoSlice'
 import { useAppDispatch } from '../../redux/hooks'
 import { ITabForm } from '../../types'
 import useHelpers from '../../hooks/useHelpers'
+import { createTab } from '../../redux/features/todo/api'
 
 const initialState: ITabForm = {
   title: '',
@@ -37,8 +37,8 @@ function useTabForm() {
       setError('')
     }
 
-    dispatch(addTab(tab))
-    setTab(initialState)
+    dispatch(createTab(tab))
+    setTab({ ...initialState, color: generateRandomColor(), textColor: generateRandomColor() })
   }
 
   useEffect(() => {
