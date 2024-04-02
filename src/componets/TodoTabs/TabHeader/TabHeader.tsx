@@ -16,7 +16,16 @@ function TabHeader({ dragHandleProps, tab }: TabHeaderProps) {
   const theme = useTheme()
 
   return (
-    <Paper style={{ marginBottom: theme.spacing(3), padding: theme.spacing(2) }} {...dragHandleProps} elevation={3}>
+    <Paper
+      style={{
+        marginBottom: theme.spacing(3),
+        padding: theme.spacing(2),
+        backgroundColor: tab.color,
+        color: tab.textColor,
+      }}
+      {...dragHandleProps}
+      elevation={3}
+    >
       <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} gap={1}>
         {isEditTabMode ? (
           <EditTab tab={tab} handleChange={handleChange} />
@@ -25,10 +34,15 @@ function TabHeader({ dragHandleProps, tab }: TabHeaderProps) {
             {tab.title}
           </Typography>
         )}
-        <TabActions addTodo={addTodo} editTabMode={editTabMode} handleDeleteTab={handleDeleteTab} />
+        <TabActions
+          textColor={tab.textColor}
+          addTodo={addTodo}
+          editTabMode={editTabMode}
+          handleDeleteTab={handleDeleteTab}
+        />
       </Box>
 
-      <ItemsCount items={tab.items} />
+      <ItemsCount textColor={tab.textColor} items={tab.items} />
     </Paper>
   )
 }

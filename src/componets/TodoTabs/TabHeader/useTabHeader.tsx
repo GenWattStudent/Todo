@@ -26,7 +26,7 @@ function useTabHeader({ tab }: TabHeaderProps) {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(editTab({ id: tab.id, title: e.target.value, items: tab.items }))
+    dispatch(editTab({ ...tab, [e.target.name]: e.target.value }))
   }
 
   return {

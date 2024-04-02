@@ -1,11 +1,12 @@
 // import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
-import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { routes } from './router/routes'
 
 const root = document.getElementById('root')
+const router = createBrowserRouter(routes)
 
 if (!root) {
   throw new Error('root element not found')
@@ -14,7 +15,7 @@ if (!root) {
 ReactDOM.createRoot(root).render(
   // <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <RouterProvider router={router}/>
     </Provider>
   // </React.StrictMode>
 

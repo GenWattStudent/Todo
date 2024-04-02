@@ -11,7 +11,7 @@ function EditTab({ tab, handleChange }: EditTabProps) {
   return (
     <FormControl style={{ width: 120, marginBottom: theme.spacing(1) }}>
       <InputLabel htmlFor="tab-title">Tab Title</InputLabel>
-      <Input type="text" id="tab-title" value={tab.title} onChange={handleChange} />
+      <Input type="text" id="tab-title" name="title" value={tab.title} onChange={handleChange} />
     </FormControl>
   )
 }

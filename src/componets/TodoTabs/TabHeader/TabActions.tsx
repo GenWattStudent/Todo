@@ -7,19 +7,20 @@ export interface TabActionsProps {
   addTodo: () => void
   editTabMode: () => void
   handleDeleteTab: () => void
+  textColor?: string
   divProps?: React.HTMLAttributes<HTMLDivElement>
 }
 
-function TabActions({ addTodo, editTabMode, handleDeleteTab, ...divProps }: TabActionsProps) {
+function TabActions({ addTodo, editTabMode, handleDeleteTab, textColor, ...divProps }: TabActionsProps) {
   return (
     <div {...divProps}>
-      <IconButton color="primary" size="small" onClick={addTodo}>
+      <IconButton style={{ color: textColor }} size="small" onClick={addTodo}>
         <AddIcon />
       </IconButton>
-      <IconButton color="warning" size="small" onClick={editTabMode}>
+      <IconButton style={{ color: textColor }} size="small" onClick={editTabMode}>
         <EditIcon />
       </IconButton>
-      <IconButton color="error" size="small" onClick={handleDeleteTab}>
+      <IconButton style={{ color: textColor }} size="small" onClick={handleDeleteTab}>
         <TrashIcon />
       </IconButton>
     </div>

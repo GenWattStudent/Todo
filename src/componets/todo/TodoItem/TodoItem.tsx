@@ -3,6 +3,7 @@ import { Todo } from '../../../types'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import useTodoItem from './useTodoItem'
+import { Link } from 'react-router-dom'
 
 export interface TodoItemProps {
   todo: Todo
@@ -11,7 +12,7 @@ export interface TodoItemProps {
   index: number
 }
 
-export default function TodoItem({ todo, actions, index }: TodoItemProps) {
+export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps) {
   const theme = useTheme()
   const { handleMouseEnter, handleMouseLeave, isHovered } = useTodoItem()
 
@@ -28,15 +29,20 @@ export default function TodoItem({ todo, actions, index }: TodoItemProps) {
               marginBottom: theme.spacing(3),
             }}
           >
-            <CardContent>
-              <Typography gutterBottom variant="h5">
-                {todo.title}
-              </Typography>
-              <Typography gutterBottom variant="body2">
-                {todo.isDaily ? 'Daily' : 'Not Daily'}
-              </Typography>
-              <Chip color="secondary" label={todo.category}></Chip>
-            </CardContent>
+            <Link
+              style={{ textDecoration: 'none', color: theme.palette.text.primary }}
+              to={`/todo/${tabId}/${todo.id}`}
+            >
+              <CardContent>
+                <Typography gutterBottom variant="h5">
+                  {todo.title}
+                </Typography>
+                <Typography gutterBottom variant="body2">
+                  {todo.isDaily ? 'Daily' : 'Not Daily'}
+                </Typography>
+                <Chip color="secondary" label={todo.category}></Chip>
+              </CardContent>
+            </Link>
             {actions && isHovered && <CardActions>{actions}</CardActions>}
           </Card>
         </div>
