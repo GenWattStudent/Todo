@@ -6,12 +6,21 @@ import AddIcon from '@mui/icons-material/Add'
 import '../../App.css'
 import useTodoView from './useTodoView'
 import StatusBar from '../../componets/StatusBar/StatusBar'
+import TextAnimation from '../../componets/animations/TextAnimation'
+import useVoiceCommand from '../../hooks/useVoiceCommand'
 
 function TodoView() {
-  const { handleClose, open, openForm, tabs } = useTodoView()
+  const { handleClose, open, openForm, tabs, currentText } = useTodoView()
+  const { voiceCommand } = useVoiceCommand()
 
+  console.log('currentText', voiceCommand)
   return (
     <>
+      <TextAnimation
+        typographyProps={{ color: 'primary', textAlign: 'center' }}
+        text={currentText}
+        duration={300}
+      ></TextAnimation>
       <Box marginBottom={3} display={'flex'} justifyContent={'space-between'}>
         <Button onClick={openForm} variant="contained" startIcon={<AddIcon />}>
           Add Tab

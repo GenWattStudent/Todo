@@ -31,3 +31,25 @@ body {
   background-color: #dddfe0;
   border-radius: 10px;
 }
+
+.cursor {
+  height: 20px;
+  width: 1px;
+  background-color: transparent;
+  animation: cursor-animation 1s infinite;
+  display: inline-flex;
+  position: relative;
+  top: 0.2rem;
+}
+
+@keyframes cursor-animation {
+  0% {
+    background-color: #1976d2;
+  }
+  50% {
+    background-color: #1976d2;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
