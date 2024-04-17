@@ -16,6 +16,7 @@ function TodoView() {
   console.log('currentText', voiceCommand)
   return (
     <>
+      {' '}
       <TextAnimation
         typographyProps={{ color: 'primary', textAlign: 'center' }}
         text={currentText}
@@ -25,12 +26,9 @@ function TodoView() {
         <Button onClick={openForm} variant="contained" startIcon={<AddIcon />}>
           Add Tab
         </Button>
-
         <StatusBar />
       </Box>
-
       <TodoTabs tabs={tabs} />
-
       <AddTodoDialog />
       <AddTabDialog isOpen={open} close={handleClose} />
     </>

@@ -1,18 +1,22 @@
 const express = require('express')
 const mongoose = require('mongoose')
+require('dotenv').config()
 const cors = require('cors')
 const routes = require('./src/router')
 
 class Server {
   constructor() {
     this.app = express()
-    this.port = 3000
+    this.port = process.env.PORT || 5000
     this.init()
   }
 
   async init() {
     try {
-      await mongoose.connect('mongodb://localhost:27017/TodoList')
+      console.log('Connecting to database....' + process.env.MONGO_URI)
+      await mongoose.connect(process.env.MONGO_URI, {
+        dbName: 'TodoList',
+      })
       console.log('Connected to database')
     } catch (error) {
       console.log('Error connecting to database')
@@ -26,7 +30,12 @@ class Server {
     this.app.use(express.json())
 
     routes.forEach((route) => {
-      this.app.use('/', route)
+      this.app.use(route)
+    })
+
+    this.app.get('/api/', (req, res) => {
+      console.log('Hello World')
+      res.send('Hello World')
     })
 
     this.start()

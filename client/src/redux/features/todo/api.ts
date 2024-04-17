@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IEditTodo, IOrderData, ITabForm, ITodoForm, ITodoTab } from "../../../types";
 import axios from 'axios'
 
-export const BASE_URL = 'http://localhost:3000/'
+// @ts-ignore
+export const BASE_URL = `http://localhost:${import.meta.env.VITE_SERVER_PORT}/api/`
 
 export const createTab = createAsyncThunk(
     'tab/createTab',
@@ -24,6 +25,7 @@ export const getTabs = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await axios.get(`${BASE_URL}tab`)
+            console.log('response', response.data)
             return response.data
         } catch (err: any) {
             if (err.response) {
