@@ -3,7 +3,7 @@ import { IEditTodo, IOrderData, ITabForm, ITodoForm, ITodoTab } from "../../../t
 import axios from 'axios'
 
 // @ts-ignore
-export const BASE_URL = `http://localhost:${import.meta.env.VITE_SERVER_PORT}/api/`
+export const BASE_URL = `https://localhost:${import.meta.env.VITE_SERVER_PORT}/api/`
 
 export const createTab = createAsyncThunk(
     'tab/createTab',

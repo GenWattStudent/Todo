@@ -1,2 +1,4 @@
 FROM nginx
+COPY ./cert/certificate.crt /etc/nginx/ssl/cert/certificate.crt
+COPY ./cert/privatekey.key /etc/nginx/ssl/cert/privatekey.key
 COPY ./default.conf /etc/nginx/conf.d/default.conf
