@@ -49,7 +49,7 @@ services:
       - ./client:/app
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - VITE_SERVER_PORT=433
+      - VITE_SERVER_PORT=443
 
 volumes:
   mongo_data: {}

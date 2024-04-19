@@ -1,4 +1,4 @@
 FROM nginx
-COPY ./cert/certificate.crt /etc/nginx/ssl/cert/certificate.crt
-COPY ./cert/privatekey.key /etc/nginx/ssl/cert/privatekey.key
+COPY ./cert/certs/pawianek.local.crt /etc/nginx/ssl/cert/certs/pawianek.local.crt
+COPY ./cert/certs/pawianek.local.key /etc/nginx/ssl/cert/certs/pawianek.local.key
 COPY ./default.conf /etc/nginx/conf.d/default.conf
