@@ -4,6 +4,7 @@ import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import useTodoItem from './useTodoItem'
 import { Link } from 'react-router-dom'
+import TextAnimation from '../../animations/TextAnimation'
 
 export interface TodoItemProps {
   todo: Todo
@@ -34,9 +35,18 @@ export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps)
               to={`/todo/${tabId}/${todo._id}`}
             >
               <CardContent>
-                <Typography gutterBottom variant="h5">
-                  {todo.title}
-                </Typography>
+                {todo.isJustAdded ? (
+                  <TextAnimation
+                    typographyProps={{ gutterBottom: true, variant: 'h5' }}
+                    text={todo.title}
+                    duration={500}
+                  />
+                ) : (
+                  <Typography gutterBottom variant="h5">
+                    {todo.title}
+                  </Typography>
+                )}
+
                 <Typography gutterBottom variant="body2">
                   {todo.isDaily ? 'Daily' : 'Not Daily'}
                 </Typography>

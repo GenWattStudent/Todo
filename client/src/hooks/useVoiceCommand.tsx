@@ -1,43 +1,46 @@
 import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
+import annyang from 'annyang'
 
 export default function useVoiceCommand() {
-  const [voiceCommand, setVoiceCommand] = React.useState<string>('')
-
+  const [isListening, setIsListening] = React.useState(false)
+  // console.log('isListening', isListening)
   useEffect(() => {
-    const recognition = new (window as any).webkitSpeechRecognition()
-    recognition.continuous = true
-    recognition.interimResults = true
-    recognition.lang = 'en-US'
-    recognition.start()
+    if (annyang) {
+      console.log('annyang', annyang)
+      // Set the language
+      ;(annyang as any).setLanguage('pl-PL')
 
-    recognition.onresult = (event: any) => {
-      const transcript = Array.from(event.results)
-        .map((result: any) => result[0])
-        .map((result: any) => result.transcript)
-        .join('')
-      setVoiceCommand(transcript)
-
-      if (event.results[0].isFinal) {
-        recognition.stop()
+      // Define a command
+      const commands = {
+        'ok adrian': () => {
+          toast.success('Hello Adrian')
+        },
       }
 
-      recognition.onend = recognition.start
-    }
+      // Add the commands to annyang
+      ;(annyang as any).addCommands(commands)
+      ;(annyang as any).addCallback('result', function (userSaid: any, commandText: any, phrases: any) {
+        console.log(userSaid) // sample output: 'hello'
+        console.log(commandText) // sample output: 'hello (there)'
+        console.log(phrases) // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+      })
+      ;(annyang as any).addCallback('resultMatch', function (userSaid: any, commandText: any, phrases: any) {
+        console.log(userSaid) // sample output: 'hello'
+        console.log(commandText) // sample output: 'hello (there)'
+        console.log(phrases) // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+      })
+      ;(annyang as any).addCallback('start', () => setIsListening(true))
+      ;(annyang as any).addCallback('end', () => setIsListening(false))
 
-    recognition.onerror = (event: any) => {
-      console.log('Error', event.error + 'asdasd')
-      if (event.error === 'no-speech') {
-        toast.error('Please try again')
-      } else if (event.error === 'not-allowed') {
-        toast.error('Please allow microphone access for voice commands')
-      } else if (event.error === 'audio-capture') {
-        toast.error(
-          'Unable to capture audio. Please check your microphone and allow microphone access for voice commands.'
-        )
-      }
+      // ;(annyang as any).addCallback('error', function (err: any) {
+      //   console.error('There was an error with the Speech Recognition:', err)
+      // })
+
+      // Start annyang
+      ;(annyang as any).start({ autoRestart: true })
     }
   }, [])
 
-  return { voiceCommand }
+  return {}
 }

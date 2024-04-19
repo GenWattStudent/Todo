@@ -11,18 +11,16 @@ import useVoiceCommand from '../../hooks/useVoiceCommand'
 
 function TodoView() {
   const { handleClose, open, openForm, tabs, currentText } = useTodoView()
-  const { voiceCommand } = useVoiceCommand()
+  const {} = useVoiceCommand()
 
-  console.log('currentText', voiceCommand)
   return (
     <>
-      {' '}
       <TextAnimation
         typographyProps={{ color: 'primary', textAlign: 'center' }}
         text={currentText}
         duration={300}
       ></TextAnimation>
-      <Box marginBottom={3} display={'flex'} justifyContent={'space-between'}>
+      <Box marginBottom={3} display={'flex'} gap={1}>
         <Button onClick={openForm} variant="contained" startIcon={<AddIcon />}>
           Add Tab
         </Button>

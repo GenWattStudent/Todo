@@ -50,6 +50,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - VITE_SERVER_PORT=443
+      - VITE_APP_ENV=docker
 
 volumes:
   mongo_data: {}

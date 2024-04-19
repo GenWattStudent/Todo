@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ITextAnimationProps } from './TextAnimation'
 
-let interval: any
-
 export default function useTextAnimation(props: ITextAnimationProps) {
   const { text, duration } = props
+  let interval: any
   const [currentText, setCurrentText] = useState<string>('')
   const [isFinished, setIsFinished] = useState<boolean>(false)
 

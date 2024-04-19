@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { ITodoTab } from '../../types'
 import TodoTab from './TodoTab/TodoTab'
 import { useRef } from 'react'
@@ -12,13 +12,18 @@ export interface TodoTabsProps {
 function TodoTabs({ tabs }: TodoTabsProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const { handleDragEnd } = useTodoTabs({ tabs })
+  const theme = useTheme()
 
   return (
-    <Box ref={containerRef} overflow={'auto'}>
+    <Box ref={containerRef} overflow={'auto'} marginBottom={theme.spacing(1)}>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="tabs" direction="horizontal" type="tabs">
           {(provided) => (
-            <div style={{ display: 'flex' }} {...provided.droppableProps} ref={provided.innerRef}>
+            <div
+              style={{ display: 'flex', padding: `${theme.spacing(1)} 0` }}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {tabs.map((tab, index) => (
                 <TodoTab key={tab._id} tab={tab} index={index} />
               ))}

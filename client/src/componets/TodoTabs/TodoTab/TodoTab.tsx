@@ -24,7 +24,15 @@ export default function TodoTab({ tab, index }: ToDoListProps) {
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Box
             ref={containerRef}
-            style={{ marginRight: theme.spacing(3), overflowY: 'auto', overflowX: 'hidden' }}
+            sx={{
+              marginRight: theme.spacing(2),
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              padding: `${theme.spacing(1.5)} ${theme.spacing(1.5)} 0 ${theme.spacing(1.5)}`,
+              borderRadius: theme.spacing(1),
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              boxShadow: '-2px -2px 6px 0px rgba(255,255,255,.2), 2px 2px 6px 0px rgba(255,255,255,.2)',
+            }}
             width={280}
             height={containerHeight}
           >

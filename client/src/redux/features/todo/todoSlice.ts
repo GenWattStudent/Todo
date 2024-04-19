@@ -4,13 +4,20 @@ import { RootState } from "../../store";
 import { createTab, deleteTab, editTab, getTabs, changeTabOrderApi, createTodo, deleteTodo, editTodo, changeTodoOrderInSameTab, changeTodoTabApi, getTodoById } from "./api";
 import { toast } from 'react-toastify'
 
+export enum Status {
+    Ready = 'Ready',
+    Loading = 'Loading',
+    Error = 'Error',
+    NetworkError = 'Network Error'
+}
+
 interface TodoState {
     tabs: ITodoTab[]
     isEdit: boolean
     editedTodo: Todo | null
     currentTabSelectedId: string | null
     todo: Todo | null
-    status: 'Ready' | 'Loading'
+    status: Status
 }
 
 const initialState: TodoState = {
@@ -19,7 +26,7 @@ const initialState: TodoState = {
     editedTodo: null,
     currentTabSelectedId: null,
     todo: null,
-    status: 'Ready'
+    status: Status.Ready
 }
 
 const pendingActions = [
@@ -97,48 +104,47 @@ export const todoSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createTab.fulfilled, (state, action) => {
             state.tabs.push(action.payload)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Tab created successfully')
         })
 
         builder.addCase(getTabs.fulfilled, (state, action) => {
             state.tabs = action.payload
-            state.status = 'Ready'
+            state.status = Status.Ready
         })
 
         builder.addCase(deleteTab.fulfilled, (state, action) => {
             state.tabs = state.tabs.filter((tab) => tab._id !== action.payload)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Tab deleted successfully')
         })
 
         builder.addCase(editTab.fulfilled, (state, action) => {
             state.tabs = state.tabs.map((tab) => tab._id === action.payload._id ? action.payload : tab)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Tab updated successfully')
         })
 
         builder.addCase(changeTabOrderApi.fulfilled, (state, action) => {
             state.tabs = action.payload
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Tab moved successfully')
         })
 
         // TODOS
         builder.addCase(createTodo.fulfilled, (state, action) => {
             state.tabs = state.tabs.map((tab) => tab._id === action.payload.tabId
-                ? { ...tab, items: [...tab.items, action.payload] }
+                ? { ...tab, items: [...tab.items, { ...action.payload, isJustAdded: true }] }
                 : tab)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Todo created successfully')
         })
 
         builder.addCase(deleteTodo.fulfilled, (state, action: PayloadAction<Todo>) => {
-
             state.tabs = state.tabs.map((tab) => tab._id === action.payload.tabId
                 ? { ...tab, items: tab.items.filter((todo) => todo._id !== action.payload._id) }
                 : tab)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Todo deleted successfully')
         })
 
@@ -146,7 +152,7 @@ export const todoSlice = createSlice({
             state.tabs = state.tabs.map((tab) => tab._id === action.payload.tabId
                 ? { ...tab, items: tab.items.map((todo) => todo._id === action.payload._id ? { ...todo, ...action.payload } : todo) }
                 : tab)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Todo updated successfully')
         })
 
@@ -154,31 +160,33 @@ export const todoSlice = createSlice({
             state.tabs = state.tabs.map((tab) => tab._id === action.payload.tabId
                 ? { ...tab, items: action.payload.todos }
                 : tab)
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Todo moved successfully')
         })
 
         builder.addCase(changeTodoTabApi.fulfilled, (state, action: PayloadAction<ITodoTab[]>) => {
             state.tabs = action.payload
-            state.status = 'Ready'
+            state.status = Status.Ready
             toast.success('Todo moved successfully')
         })
 
         builder.addCase(getTodoById.fulfilled, (state, action: PayloadAction<Todo>) => {
             state.todo = action.payload
-            state.status = 'Ready'
+            state.status = Status.Ready
         })
 
         pendingActions.forEach((pendingAction) => {
             builder.addCase(pendingAction, (state, action) => {
-                state.status = 'Loading';
+                state.status = Status.Loading;
             });
         });
 
         rejectActions.forEach((rejectAction) => {
-            builder.addCase(rejectAction, (state, action) => {
-                state.status = 'Ready';
-                toast.error(action.payload as string);
+            builder.addCase(rejectAction, (state, action: any) => {
+                if ('status' in action.payload && 'message' in action.payload) {
+                    state.status = action.payload.status;
+                    toast.error(action.payload.message);
+                }
             });
         });
     }

@@ -1,13 +1,35 @@
 import { Chip } from '@mui/material'
 import { useAppSelector } from '../../redux/hooks'
-import { selectStatus } from '../../redux/features/todo/todoSlice'
+import { Status, selectStatus } from '../../redux/features/todo/todoSlice'
+import TextAnimation from '../animations/TextAnimation'
 
 function StatusBar() {
   const status = useAppSelector(selectStatus)
 
-  const color = status === 'Ready' ? 'success' : 'warning'
+  function getColor(status: Status): 'success' | 'warning' | 'error' {
+    let color: 'success' | 'warning' | 'error' = 'success'
 
-  return <Chip color={color} label={status}></Chip>
+    switch (status) {
+      case Status.Loading:
+        color = 'warning'
+        break
+      case Status.Error:
+        color = 'error'
+        break
+      case Status.NetworkError:
+        color = 'error'
+        break
+      default:
+        color = 'success'
+        break
+    }
+
+    return color
+  }
+
+  const color = getColor(status)
+
+  return <Chip color={color} label={<TextAnimation text={status} duration={200} />}></Chip>
 }
 
 export default StatusBar

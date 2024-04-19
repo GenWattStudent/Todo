@@ -13,13 +13,19 @@ function useTodoTab({ containerRef }: TodoTabHookProps) {
   const calculateContainerHeight = (): number => {
     if (!containerRef.current) return DEFAULT_HEIGHT
 
-    const paddingY = +theme.spacing(3).replace('px', '')
+    const paddingY = +theme.spacing(3).replace('px', '') + +theme.spacing(1.5).replace('px', '')
 
     return window.innerHeight - containerRef.current.getBoundingClientRect().top - paddingY
   }
 
+  const handleResize = () => {
+    setContainerHeight(calculateContainerHeight())
+  }
+
   useLayoutEffect(() => {
     setContainerHeight(calculateContainerHeight())
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [containerRef.current])
 
   return {

@@ -1,3 +1,5 @@
+import { Status } from "./redux/features/todo/todoSlice";
+
 export interface Todo {
     title: string;
     isDaily: boolean;
@@ -7,6 +9,7 @@ export interface Todo {
     order: number;
     description: string;
     tabId: string;
+    isJustAdded?: boolean;
 }
 
 export type ITodoForm = Omit<Todo, 'isComplated' | '_id' | 'order'> & { tabId: string };
@@ -38,4 +41,9 @@ export interface IEditTodo {
     todo: ITodoForm
     tabId: string
     todoId: string
+}
+
+export interface ErrorResponse {
+    message: string
+    status: Status
 }
