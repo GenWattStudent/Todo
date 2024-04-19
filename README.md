@@ -1,0 +1,1 @@
+To start nginx server with https add your certifications in ./nginx/cert/certs/
