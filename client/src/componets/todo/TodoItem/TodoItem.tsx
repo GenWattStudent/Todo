@@ -63,7 +63,14 @@ export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps)
                 </Typography>
               </CardContent>
             </Link>
-            {actions && isHovered && <CardActions>{actions}</CardActions>}
+            {actions && (
+              <CardActions
+                className="animate-height"
+                style={{ maxHeight: isHovered ? '1000px' : '0', padding: isHovered ? theme.spacing(1) : 0 }}
+              >
+                {actions}
+              </CardActions>
+            )}
           </Card>
         </div>
       )}
