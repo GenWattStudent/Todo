@@ -12,9 +12,9 @@ export default function useVoiceCommand() {
     // speech recognition
 
     if (annyang) {
-
-      // Set the language
-      ; (annyang as any).setLanguage('pl-PL')
+      console.log(annyang)
+        // Set the language
+        ; (annyang as any).setLanguage('pl-PL')
       // Define a command
       const commands = {
         'okej adrian': () => {
@@ -39,7 +39,7 @@ export default function useVoiceCommand() {
         //   console.error('There was an error with the Speech Recognition:', err)
         // })
         // Start annyang
-        ; (annyang as any).start({ autoRestart: true, continuous: false })
+        ; (annyang as any).start({ autoRestart: true, continuous: true })
     }
   }, [])
 

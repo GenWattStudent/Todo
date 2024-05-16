@@ -21,11 +21,11 @@ function useTabForm() {
   }
 
   const handleColorChange = (color: string) => {
-    setTab((prev) => ({ ...prev, color }))
+    setTab((prev) => ({ ...prev, color: color || "#00000" }))
   }
 
   const handleTextColorChange = (textColor: string) => {
-    setTab((prev) => ({ ...prev, textColor }))
+    setTab((prev) => ({ ...prev, textColor: textColor || "#ffffff" }))
   }
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,6 +33,7 @@ function useTabForm() {
 
     if (tab.title.length < 2) {
       setError('Tab should have more than 2 letters')
+      return
     } else {
       setError('')
     }

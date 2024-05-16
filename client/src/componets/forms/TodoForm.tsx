@@ -11,23 +11,25 @@ import {
   Button,
   Box,
   Typography,
+  useTheme,
 } from '@mui/material'
 import useTodoForm from './useTodoForm'
 
-export interface TodoFormProps {}
+export interface TodoFormProps { }
 
-export default function TodoForm({}: TodoFormProps) {
+export default function TodoForm({ }: TodoFormProps) {
   const { cancelEdit, categories, error, form, handleChange, handleChangeSelect, handleSubmit, message, isEdit } =
     useTodoForm()
+  const theme = useTheme()
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl fullWidth style={{ marginTop: '.5rem' }}>
+      <FormControl fullWidth style={{ marginTop: theme.spacing(.5) }}>
         <InputLabel htmlFor="title">Title</InputLabel>
         <Input type="text" name="title" id="title" error={error} value={form.title} onChange={handleChange} />
       </FormControl>
 
-      <FormControl fullWidth style={{ marginTop: '.5rem' }}>
+      <FormControl fullWidth style={{ marginTop: theme.spacing(2) }}>
         <InputLabel htmlFor="description">Description</InputLabel>
         <Input
           type="text"
@@ -36,11 +38,12 @@ export default function TodoForm({}: TodoFormProps) {
           error={error}
           value={form.description}
           onChange={handleChange}
+          multiline
         />
       </FormControl>
 
-      <InputLabel htmlFor="endDate">End Date</InputLabel>
-      <FormControl fullWidth style={{ marginTop: '.5rem' }}>
+      <InputLabel sx={{ marginTop: theme.spacing(3) }} htmlFor="endDate">End Date</InputLabel>
+      <FormControl fullWidth>
         <Input
           type="datetime-local"
           name="endDate"
@@ -76,7 +79,7 @@ export default function TodoForm({}: TodoFormProps) {
             </MenuItem>
           ))}
         </Select>
-        <Box display={'flex'} gap={1} marginTop={1}>
+        <Box display={'flex'} gap={1} marginTop={2}>
           <Button variant="contained" type="submit">
             {isEdit ? 'Edit Todo' : 'Add Todo'}
           </Button>

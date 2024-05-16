@@ -1,10 +1,11 @@
-import { Card, CardActions, CardContent, Chip, Typography, useTheme } from '@mui/material'
+import { Box, Card, CardActions, CardContent, Chip, Typography, useTheme } from '@mui/material'
 import { Todo } from '../../../types'
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import useTodoItem from './useTodoItem'
 import { Link } from 'react-router-dom'
 import TextAnimation from '../../animations/TextAnimation'
+import useFormatter from '../../../hooks/useFormatter'
 
 export interface TodoItemProps {
   todo: Todo
@@ -16,6 +17,13 @@ export interface TodoItemProps {
 export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps) {
   const theme = useTheme()
   const { handleMouseEnter, handleMouseLeave, isHovered } = useTodoItem()
+  const { formatDate } = useFormatter()
+
+  const getCardStyles = (isDragging: boolean) => ({
+    width: '100%',
+    backgroundColor: isDragging ? theme.palette.primary.light : '',
+    marginBottom: theme.spacing(3),
+  })
 
   return (
     <Draggable draggableId={todo._id} index={index} key="todo">
@@ -24,11 +32,7 @@ export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps)
           <Card
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            style={{
-              width: '100%',
-              backgroundColor: snapshot.isDragging ? theme.palette.primary.light : '',
-              marginBottom: theme.spacing(3),
-            }}
+            style={getCardStyles(snapshot.isDragging)}
           >
             <Link
               style={{ textDecoration: 'none', color: theme.palette.text.primary }}
@@ -47,22 +51,33 @@ export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps)
                   </Typography>
                 )}
 
-                <Typography gutterBottom variant="body2">
-                  {todo.isDaily ? 'Daily' : 'Not Daily'}
-                </Typography>
-                <Chip color="secondary" label={todo.category}></Chip>
+                <Box sx={{ backgroundColor: theme.palette.secondary.light, padding: theme.spacing(1), borderRadius: theme.spacing(.4), color: theme.palette.secondary.contrastText }}>
+                  {!todo.isJustAdded ? (
+                    <TextAnimation
+                      typographyProps={{ gutterBottom: true, variant: 'body1' }}
+                      text={todo.description}
+                      duration={200}
+                    />
+                  ) : (
+                    <Typography gutterBottom variant="body1">
+                      {todo.description}
+                    </Typography>
+                  )}
+                </Box>
+
+                <Box sx={{ marginTop: theme.spacing(1) }}>
+                  <Typography gutterBottom variant="body2">
+                    {todo.isDaily ? 'Daily' : 'Not Daily'}
+                  </Typography>
+                  <Chip color="secondary" label={todo.category}></Chip>
+                </Box>
 
                 <Typography marginTop={theme.spacing(2)} variant="body2" color="textSecondary">
-                  {new Date(todo.endDate).toLocaleString('pl-PL', {
-                    month: 'long',
-                    year: 'numeric',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                  })}
+                  {formatDate(todo.endDate)}
                 </Typography>
               </CardContent>
             </Link>
+
             {actions && (
               <CardActions
                 className="animate-height"
