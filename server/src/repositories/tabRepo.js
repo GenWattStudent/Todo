@@ -20,7 +20,7 @@ class TabRepo {
   }
 
   async updateTab(id, tab) {
-    return await Tab.findByIdAndUpdate(id, tab, { new: true })
+    return await Tab.findByIdAndUpdate(id, tab, { new: true }).populate('items')
   }
 
   async deleteTab(id) {

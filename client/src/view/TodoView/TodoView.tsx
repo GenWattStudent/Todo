@@ -8,13 +8,15 @@ import useTodoView from './useTodoView'
 import StatusBar from '../../componets/StatusBar/StatusBar'
 import TextAnimation from '../../componets/animations/TextAnimation'
 import useVoiceCommand from '../../hooks/useVoiceCommand'
+import SpeechContainer from '../../componets/speech/SpeechContainer/SpeechContainer'
 
 function TodoView() {
   const { handleClose, open, openForm, tabs, currentText } = useTodoView()
-  const {} = useVoiceCommand()
+  const { isUserSpeaking } = useVoiceCommand()
 
   return (
     <>
+      <SpeechContainer show={isUserSpeaking} />
       <TextAnimation
         typographyProps={{ color: 'primary', textAlign: 'center' }}
         text={currentText}

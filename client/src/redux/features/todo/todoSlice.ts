@@ -70,6 +70,10 @@ export const todoSlice = createSlice({
             state.tabs = action.payload
         },
 
+        updateTab: (state, action: PayloadAction<ITodoTab>) => {
+            state.tabs = state.tabs.map((tab) => tab._id === action.payload._id ? action.payload : tab)
+        },
+
         // Todo
         changeOrder: (state, action: PayloadAction<{ tabId: string, items: Todo[] }>) => {
             state.tabs = state.tabs.map((tab) => tab._id === action.payload.tabId
@@ -192,7 +196,7 @@ export const todoSlice = createSlice({
     }
 })
 
-export const { changeOrder, setTodoToEdit, selectTab, setTabs, changeTodoTab } = todoSlice.actions
+export const { changeOrder, setTodoToEdit, selectTab, setTabs, changeTodoTab, updateTab } = todoSlice.actions
 export const selectTabs = (state: RootState) => state.todos.tabs
 export const selectIsEdit = (state: RootState) => state.todos.isEdit
 export const selectEditedTodo = (state: RootState) => state.todos.editedTodo

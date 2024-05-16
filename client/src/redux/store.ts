@@ -9,6 +9,8 @@ export const store = configureStore({
         todoCategories: TodoCategoryReducer,
         todoDialog: TodoDialogSlice
     },
+    //@ts-ignore
+    devTools: import.meta.env.VITE_APP_DEV === 'true'
 });
 
 export type RootState = ReturnType<typeof store.getState>;

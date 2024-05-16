@@ -62,6 +62,7 @@ export const editTab = createAsyncThunk(
     async (tab: ITodoTab, { rejectWithValue }) => {
         try {
             const response = await axios.put(`${BASE_URL}tab/${tab._id}`, tab)
+            console.log(response.data)
             return response.data
         } catch (err: any) {
             return rejectWithValue(handleErrors(err))
