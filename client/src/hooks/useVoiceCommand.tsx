@@ -1,12 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import annyang from 'annyang'
 
 export default function useVoiceCommand() {
-  const [isListening, setIsListening] = React.useState(false)
-  const [isUserSpeaking, setIsUserSpeaking] = React.useState(false)
-  const [command, setCommand] = React.useState('')
+  const [isListening, setIsListening] = useState(false)
+  const [isUserSpeaking, setIsUserSpeaking] = useState(false)
+  const [command, setCommand] = useState('')
   // console.log('isListening', isListening
+
+  useEffect(() => { console.log("lolek " + isUserSpeaking) }, [isUserSpeaking])
+
+
+  const hey = () => {
+    setIsUserSpeaking(prev => {
+      console.log('Updating isUserSpeaking to true')
+      return true
+    })
+  }
 
   useEffect(() => {
     // speech recognition
@@ -17,13 +27,14 @@ export default function useVoiceCommand() {
         ; (annyang as any).setLanguage('pl-PL')
       // Define a command
       const commands = {
-        'okej adrian': () => {
-          setIsUserSpeaking(true)
+        'okej adrian': function () {
           toast.success('Hello Adrian')
+          hey()
         },
       }
         // Add the commands to annyang
         ; (annyang as any).addCommands(commands)
+
         ; (annyang as any).addCallback('result', function (userSaid: any, commandText: any, phrases: any) {
           console.log(phrases) // sample output: 'hello'
           setCommand(userSaid[0])

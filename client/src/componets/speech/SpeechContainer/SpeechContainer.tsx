@@ -8,7 +8,7 @@ export interface ISpeechContainerProps {
 
 function SpeechContainer({ show }: ISpeechContainerProps) {
     const { isListening } = useVoiceCommand()
-    console.log('isListening', isListening)
+    console.log('isListening', show)
     return (
         <Drawer open={show}>
             <CurrentSpeech />

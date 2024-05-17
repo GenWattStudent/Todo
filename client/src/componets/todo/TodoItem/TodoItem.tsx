@@ -52,7 +52,7 @@ export default function TodoItem({ todo, actions, index, tabId }: TodoItemProps)
                 )}
 
                 <Box sx={{ backgroundColor: theme.palette.secondary.light, padding: theme.spacing(1), borderRadius: theme.spacing(.4), color: theme.palette.secondary.contrastText }}>
-                  {!todo.isJustAdded ? (
+                  {todo.isJustAdded ? (
                     <TextAnimation
                       typographyProps={{ gutterBottom: true, variant: 'body1' }}
                       text={todo.description}
