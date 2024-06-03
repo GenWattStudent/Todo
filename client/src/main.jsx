@@ -8,7 +8,11 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 const root = document.getElementById('root')
-const router = createBrowserRouter(routes)
+
+const routerOptions = {
+  basename: import.meta.env.MODE === 'development' ? '/' : '/Todo/',
+}
+const router = createBrowserRouter(routes, routerOptions)
 
 if (!root) {
   throw new Error('root element not found')
@@ -16,10 +20,10 @@ if (!root) {
 
 ReactDOM.createRoot(root).render(
   // <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <RouterProvider router={router} />
-    </Provider>
+  <Provider store={store}>
+    <ToastContainer />
+    <RouterProvider router={router} />
+  </Provider>
   // </React.StrictMode>
 
 )
