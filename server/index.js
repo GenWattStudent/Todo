@@ -30,7 +30,7 @@ class Server {
     this.app.use(express.json())
 
     routes.forEach((route) => {
-      this.app.use(route)
+      this.app.use("/api/", route)
     })
 
     this.app.get('/api/', (req, res) => {
