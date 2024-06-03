@@ -4,10 +4,7 @@ import axios from 'axios'
 import { Status } from "./todoSlice";
 
 // @ts-ignore
-export const BASE_URL = import.meta.env.VITE_APP_ENV === 'docker' ? `https://localhost:${import.meta.env.VITE_SERVER_PORT}/api/` :
-    // @ts-ignore
-    `http://localhost:${import.meta.env.VITE_SERVER_PORT}/`
-
+export const BASE_URL = import.meta.env.VITE_SERVER_URL
 
 function handleErrors(err: any): ErrorResponse {
     if (err.message === 'Network Error' || err.message.includes('net::ERR_CONNECTION_REFUSED')) {

@@ -23,9 +23,9 @@ services:
     restart: always
     volumes:
       - ./nginx/default.conf:/etc/nginx/default.conf
-    
+
   api:
-    build: 
+    build:
       dockerfile: Dockerfile.dev
       context: ./server
     environment:
@@ -49,8 +49,8 @@ services:
       - ./client:/app
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - VITE_SERVER_PORT=443
       - VITE_APP_ENV=docker
+      - VITE_SERVER_URL=http://localhost:443/api/
 
 volumes:
   mongo_data: {}
