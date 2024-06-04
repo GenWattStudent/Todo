@@ -14,9 +14,7 @@ const routerOptions = {
 }
 const router = createBrowserRouter(routes, routerOptions)
 
-if (!root) {
-  throw new Error('root element not found')
-}
+if (!root) throw new Error('root element not found')
 
 ReactDOM.createRoot(root).render(
   // <React.StrictMode>
@@ -25,5 +23,4 @@ ReactDOM.createRoot(root).render(
     <RouterProvider router={router} />
   </Provider>
   // </React.StrictMode>
-
 )
