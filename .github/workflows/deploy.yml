@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  VITE_API_KEY: ${{ secrets.VITE_SERVER_URL }}
+  VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
 
 jobs:
   build:
