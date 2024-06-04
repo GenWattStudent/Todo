@@ -15,7 +15,7 @@ class Server {
     try {
       console.log('Connecting to database....' + process.env.MONGO_URI)
       await mongoose.connect(process.env.MONGO_URI, {
-        dbName: 'TodoList',
+        dbName: process.env.DB_NAME,
       })
       console.log('Connected to database')
     } catch (error) {

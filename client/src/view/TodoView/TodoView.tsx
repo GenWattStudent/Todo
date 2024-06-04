@@ -13,10 +13,9 @@ import SpeechContainer from '../../componets/speech/SpeechContainer/SpeechContai
 function TodoView() {
   const { handleClose, open, openForm, tabs, currentText } = useTodoView()
   const { isUserSpeaking } = useVoiceCommand()
-  console.log('isUserSpeaking', isUserSpeaking)
+
   return (
     <>
-
       <SpeechContainer show={isUserSpeaking} />
       <TextAnimation
         typographyProps={{ color: 'primary', textAlign: 'center' }}
@@ -25,7 +24,7 @@ function TodoView() {
       ></TextAnimation>
       <Box marginBottom={3} display={'flex'} gap={1}>
         <Button onClick={openForm} variant="contained" startIcon={<AddIcon />}>
-          Add Tab {isUserSpeaking ? "LOLEK" : "22"}
+          Add Tab
         </Button>
         <StatusBar />
       </Box>
