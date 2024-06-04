@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  VITE_API_KEY: ${{ secrets.VITE_SERVER_URL }}
+
 jobs:
   build:
     name: Build
@@ -16,8 +19,6 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
-        env:
-          VITE_API_KEY: ${{ secrets.VITE_SERVER_URL }}
 
       - name: Install dependencies
         run: cd client && npm install
