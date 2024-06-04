@@ -6,6 +6,8 @@ import { Status } from "./todoSlice";
 // @ts-ignore
 export const BASE_URL = import.meta.env.VITE_SERVER_URL
 
+console.log(BASE_URL)
+
 function handleErrors(err: any): ErrorResponse {
     if (err.message === 'Network Error' || err.message.includes('net::ERR_CONNECTION_REFUSED')) {
         return { message: 'Server not responding', status: Status.NetworkError }
